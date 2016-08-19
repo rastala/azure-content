@@ -1,6 +1,6 @@
 <properties
 	pageTitle="Create text analytics models in Azure Machine Learning Studio | Microsoft Azure"
-	description="How to create text analytics models in Azure Machine Learning Studio using modules for text preprocessing, N-grams, feature hashing and topic modeling"
+	description="How to create text analytics models in Azure Machine Learning Studio using modules for text preprocessing, N-grams or feature hashing"
 	services="machine-learning"
 	documentationCenter=""
 	authors="rastala"
@@ -19,7 +19,7 @@
 
 #Create text analytics models in Azure Machine Learning Studio
 
-You can use Azure Machine Learning to build and operationalize text analytics models, for example to perform document classification or sentiment analysis, or to cluster your text dataset into topics.
+You can use Azure Machine Learning to build and operationalize text analytics models, for example to perform document classification or sentiment analysis.
 
 In a text analytics experiment, you would typically:
 
@@ -29,7 +29,13 @@ In a text analytics experiment, you would typically:
  4. Score and validate the model
  5. Deploy the model to production
 
-In this tutorial, you learn these steps as we walk through a sentiment analysis model using "Book Reviews from Amazon" dataset. This dataset consists of review scores (1,2 or 4,5) and a free-form text. The goal of our is to predict the the review score: low (1,2) or high (4,5).
+In this tutorial, you learn these steps as we walk through a sentiment analysis model using ["Book Reviews from Amazon" dataset] (https://azure.microsoft.com/en-us/documentation/articles/machine-learning-use-sample-datasets). This dataset consists of review scores (1,2 or 4,5) and a free-form text. The goal of our is to predict the the review score: low (1,2) or high (4,5).
+
+The experiments covered in this tutorial are available in Cortana Intelligence Gallery:
+
+[Predict Book Reviews] (https://gallery.cortanaintelligence.com/Experiment/Predict-Book-Reviews-1)
+
+[Predict Book Reviews - Predictive Experiment] (https://gallery.cortanaintelligence.com/Experiment/Predict-Book-Reviews-Predictive-Experiment-1)
 
 ## Step 1: Clean and preprocess text dataset
 
@@ -41,7 +47,7 @@ Optionally, you can apply custom list of stopwords, or custom C# syntax regular 
 
 As the last preprocessing step, we split the data into train and test sets.
 
-## Step 2: Extracte numeric feature vectors from pre-processed text
+## Step 2: Extract numeric feature vectors from pre-processed text
 
 Machine learning algorithms typically expect numeric feature vectors as input instead of free-form text. We use Extract N-Gram Features module to transform the text data to such format. This module takes a column of whitespace-separated words and computes a dictionary of words, or N-grams of words, that appear in your dataset. Then, it counts how many times each word, or N-gram, appears in each record, and creates new feature vectors from those counts. In this tutorial, we set N-gram size to 2, so our feature vectors include single words and combinations of two subsequent words.
 
@@ -73,6 +79,6 @@ As a final step of setting up the predictive experiment, we insert Select Column
 
 Now we have an experiment that can be published as a web service and called using request-response or batch execution APIs.
 
-## Multi-language support and language detection
+## Additional information
 
-## Topic modeling
+[MSDN documentaton on text analytics modules] (https://msdn.microsoft.com/en-US/library/azure/dn905886.aspx)
