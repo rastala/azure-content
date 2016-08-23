@@ -39,21 +39,21 @@ The experiments covered in this tutorial are available in Cortana Intelligence G
 
 ## Step 1: Clean and preprocess text dataset
 
-We begin the experiment by dividing the review scores into categorical low and high buckets to formulate the problem as two-class classification. We do this step using Edit Metadata and Group Categorical Values modules.
+We begin the experiment by dividing the review scores into categorical low and high buckets to formulate the problem as two-class classification. We do this step using [Edit Metadata] (https://msdn.microsoft.com/en-us/library/azure/dn905986.aspx) and [Group Categorical Values] (https://msdn.microsoft.com/en-us/library/azure/dn906014.aspx) modules.
 
 ![Create Label] (./media/machine-learning-text-analytics-module-tutorial/create-label.png)
 
-Then, we clean the text using Preprocess Text module. The cleaning will reduce the noise in the dataset, help you find the most important features, and improve the accuracy of the final model. We remove stopwords - very common words such as "the" or "a" - as well as numbers, special characters, duplicated characters such as "coool", email addresses and URLs. We also convert the text to lowercase, lemmatize the words and detect sentence boundaries that will be indicated by "|||" symbol in in pre-processed text.
+Then, we clean the text using [Preprocess Text] (https://msdn.microsoft.com/en-us/library/azure/mt762915.aspx) module. The cleaning will reduce the noise in the dataset, help you find the most important features, and improve the accuracy of the final model. We remove stopwords - very common words such as "the" or "a" - as well as numbers, special characters, duplicated characters such as "coool", email addresses and URLs. We also convert the text to lowercase, lemmatize the words and detect sentence boundaries that will be indicated by "|||" symbol in in pre-processed text.
 
 ![Preprocess Text] (./media/machine-learning-text-analytics-module-tutorial/preprocess-text.png)
 
-Optionally, you can apply custom list of stopwords, or custom C# syntax regular expression to replace substrings, as well as remove words by part of speech: nouns, verbs or adjectives.
+Optionally, you can apply custom list of stopwords, or custom [.NET syntax regular expression] (https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx) to replace substrings, as well as remove words by part of speech: nouns, verbs or adjectives.
 
 After the preprocessing is complete, we split the data into train and test sets.
 
 ## Step 2: Extract numeric feature vectors from pre-processed text
 
-Machine learning algorithms typically expect numeric feature vectors as input instead of free-form text. We use Extract N-Gram Features module to transform the text data to such format. This module takes a column of whitespace-separated words and computes a dictionary of words, or N-grams of words, that appear in your dataset. Then, it counts how many times each word, or N-gram, appears in each record, and creates new feature vectors from those counts. In this tutorial, we set N-gram size to 2, so our feature vectors include single words and combinations of two subsequent words.
+Machine learning algorithms typically expect numeric feature vectors as input instead of free-form text. We use [Extract N-Gram Features] (https://msdn.microsoft.com/en-us/library/azure/mt762916.aspx) module to transform the text data to such format. This module takes a column of whitespace-separated words and computes a dictionary of words, or N-grams of words, that appear in your dataset. Then, it counts how many times each word, or N-gram, appears in each record, and creates new feature vectors from those counts. In this tutorial, we set N-gram size to 2, so our feature vectors include single words and combinations of two subsequent words.
 
 ![Extract N-grams] (./media/machine-learning-text-analytics-module-tutorial/extract-ngrams.png)
 
@@ -69,7 +69,7 @@ As an alternative approach to using Extract N-Gram Features, you can use Feature
 
 Now the text has been transformed to numeric feature columns. The dataset still contains string columns from previous stages, so we use Select Columns in Dataset to exclude them.
 
-We then use Two-Class Logistic Regression to predict our target: high or low review score. Note that at this point the text analytics problem has been transformed into a regular classification problem, and you can use the tools available in Azure Machine Learning to improve the model. For example, you can experiment with different classifiers to find out how accurate results they give, or use hyperparameter tuning to improve the accuracy.
+We then use [Two-Class Logistic Regression] (https://msdn.microsoft.com/en-us/library/azure/dn905994.aspx) to predict our target: high or low review score. Note that at this point the text analytics problem has been transformed into a regular classification problem, and you can use the tools available in Azure Machine Learning to improve the model. For example, you can experiment with different classifiers to find out how accurate results they give, or use hyperparameter tuning to improve the accuracy.
 
 ![Train and Score] (./media/machine-learning-text-analytics-module-tutorial/scoring-text.png)
 
@@ -81,7 +81,7 @@ After the text column in test data has been transformed to numeric feature colum
 
 ## Step 5: Deploy the model to production
 
-The model is almost ready to be deployed to production. When deployed as web service, it should take free-form text string as input, and return a prediction "high" or "low", using the learned N-gram vocabulary to transform the text to features, and trained logistic regression model to make a prediction from those features. 
+The model is almost ready to be [deployed to production] (https://azure.microsoft.com/en-us/documentation/articles/machine-learning-publish-a-machine-learning-web-service/). When deployed as web service, it should take free-form text string as input, and return a prediction "high" or "low", using the learned N-gram vocabulary to transform the text to features, and trained logistic regression model to make a prediction from those features. 
 
 To accomplish this, we first save the N-gram vocabulary as dataset, and the trained logistic regression model from the training branch of the experiment. Then, we save the experiment using "Save As" to create a new experiment graph for predictive model. We remove the Split Data module and the training branch from the experiment, and connect the previously saved N-gram vocabulary and model to Extract N-Gram Features and Score Model modules, respectively. We also remove the Evaluate Model module.
 
@@ -93,4 +93,4 @@ Now we have an experiment that can be published as a web service and called usin
 
 ## Additional information
 
-[MSDN documentaton on text analytics modules] (https://msdn.microsoft.com/en-US/library/azure/dn905886.aspx)
+[MSDN documentation on text analytics modules] (https://msdn.microsoft.com/en-US/library/azure/dn905886.aspx)
